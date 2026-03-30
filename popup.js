@@ -8,6 +8,9 @@ const settingsBtn = document.getElementById('settingsBtn');
 const newTaskInput = document.getElementById('newTaskInput');
 const addTaskBtn = document.getElementById('addTaskBtn');
 
+// キャッシュ
+let titlePropertyName = null;
+
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
   loadTasks();
@@ -24,6 +27,37 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// データベースのタイトルプロパティ名を取得
+async function getTitlePropertyName(apiToken, databaseId) {
+  if (titlePropertyName) {
+    return titlePropertyName;
+  }
+
+  const response = await fetch(`https://api.notion.com/v1/databases/${databaseId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${apiToken}`,
+      'Notion-Version': NOTION_VERSION
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('データベース情報の取得に失敗しました');
+  }
+
+  const database = await response.json();
+
+  // タイトルプロパティを探す
+  for (const [key, value] of Object.entries(database.properties)) {
+    if (value.type === 'title') {
+      titlePropertyName = key;
+      return key;
+    }
+  }
+
+  throw new Error('タイトルプロパティが見つかりません');
+}
+
 // タスク一覧読み込み
 async function loadTasks() {
   taskList.innerHTML = '<div class="loading">読み込み中...</div>';
@@ -35,6 +69,9 @@ async function loadTasks() {
       taskList.innerHTML = '<div class="error">設定が必要です。⚙️ 設定ボタンからAPI TokenとDatabase IDを入力してください。</div>';
       return;
     }
+
+    // タイトルプロパティ名を取得
+    await getTitlePropertyName(apiToken, databaseId);
 
     const today = new Date().toISOString().split('T')[0];
 
@@ -103,7 +140,17 @@ function createTaskElement(task) {
 
   const label = document.createElement('label');
   label.htmlFor = task.id;
-  label.textContent = task.properties['Name']?.title[0]?.plain_text || '(タイトルなし)';
+
+  // タイトルプロパティを動的に取得（type: 'title'を探す）
+  let taskTitle = '(タイトルなし)';
+  for (const [key, value] of Object.entries(task.properties)) {
+    if (value.type === 'title' && value.title && value.title.length > 0) {
+      taskTitle = value.title[0]?.plain_text || '(タイトルなし)';
+      break;
+    }
+  }
+
+  label.textContent = taskTitle;
 
   div.appendChild(checkbox);
   div.appendChild(label);
@@ -164,6 +211,30 @@ async function addTask() {
     addTaskBtn.disabled = true;
     addTaskBtn.textContent = '追加中...';
 
+    // タイトルプロパティ名を取得
+    const titleProp = await getTitlePropertyName(apiToken, databaseId);
+
+    // プロパティオブジェクトを動的に構築
+    const properties = {
+      [titleProp]: {
+        title: [
+          {
+            text: {
+              content: taskName
+            }
+          }
+        ]
+      },
+      '実行日': {
+        date: {
+          start: today
+        }
+      },
+      '完了': {
+        checkbox: false
+      }
+    };
+
     const response = await fetch('https://api.notion.com/v1/pages', {
       method: 'POST',
       headers: {
@@ -173,25 +244,7 @@ async function addTask() {
       },
       body: JSON.stringify({
         parent: { database_id: databaseId },
-        properties: {
-          'Name': {
-            title: [
-              {
-                text: {
-                  content: taskName
-                }
-              }
-            ]
-          },
-          '実行日': {
-            date: {
-              start: today
-            }
-          },
-          '完了': {
-            checkbox: false
-          }
-        }
+        properties: properties
       })
     });
 
