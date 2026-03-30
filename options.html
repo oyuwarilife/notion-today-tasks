@@ -163,8 +163,8 @@
     <form id="settingsForm">
       <div class="form-group">
         <label for="apiToken">Notion API Token</label>
-        <input type="password" id="apiToken" placeholder="secret_xxxxxxxxxxxxxx" required>
-        <div class="hint">NotionのIntegration Tokenを入力してください（secret_で始まる文字列）</div>
+        <input type="password" id="apiToken" placeholder="ntn_xxxxxxxxxxxxxx" required>
+        <div class="hint">NotionのIntegration Tokenを入力してください（ntn_ または secret_ で始まる文字列）</div>
       </div>
 
       <div class="form-group">
@@ -185,7 +185,7 @@
           <a href="https://www.notion.so/my-integrations" target="_blank">Notion Integrations</a>にアクセスし、「新しいインテグレーション」を作成
         </li>
         <li>
-          作成したIntegrationの「Internal Integration Token」（<code>secret_XXX</code>）をコピーし、上記の「Notion API Token」に入力
+          作成したIntegrationの「Internal Integration Token」（<code>ntn_XXX</code> または <code>secret_XXX</code>）をコピーし、上記の「Notion API Token」に入力
         </li>
         <li>
           タスク管理用Notionデータベースを開き、以下のプロパティを作成:

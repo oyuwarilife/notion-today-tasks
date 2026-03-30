@@ -15,7 +15,7 @@
 
 1. [Notion Integrations](https://www.notion.so/my-integrations)にアクセス
 2. 「新しいインテグレーション」を作成
-3. Internal Integration Token（`secret_XXX`）をコピー
+3. Internal Integration Token（`ntn_XXX` または `secret_XXX`）をコピー
 
 ### 2. Database設定
 
@@ -40,7 +40,7 @@
 ### 4. 初期設定
 
 1. 拡張機能アイコンをクリック → 「⚙️ 設定」
-2. API Token（`secret_XXX`）を入力
+2. API Token（`ntn_XXX` または `secret_XXX`）を入力
 3. Database ID（32文字の英数字）を入力
 4. 「保存」をクリック
 

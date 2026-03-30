@@ -30,8 +30,8 @@ form.addEventListener('submit', async (e) => {
   }
 
   // API Token形式チェック
-  if (!apiToken.startsWith('secret_')) {
-    showStatus('API Tokenは "secret_" で始まる必要があります', 'error');
+  if (!apiToken.startsWith('secret_') && !apiToken.startsWith('ntn_')) {
+    showStatus('API Tokenは "secret_" または "ntn_" で始まる必要があります', 'error');
     return;
   }
 
