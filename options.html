@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion Today's Tasks - 設定</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+      background: #f8f9fa;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 32px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #6e7781;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #e1e4e8;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #0969da;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #6e7781;
+      margin-top: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0969da;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #0860ca;
+    }
+
+    button:active {
+      background: #0757ba;
+    }
+
+    .status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      display: none;
+    }
+
+    .status.success {
+      background: #dafbe1;
+      color: #1a7f37;
+      display: block;
+    }
+
+    .status.error {
+      background: #fff1f0;
+      color: #cf222e;
+      display: block;
+    }
+
+    .instructions {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid #e1e4e8;
+    }
+
+    .instructions h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .instructions ol {
+      margin-left: 20px;
+      line-height: 1.8;
+      color: #1a1a1a;
+    }
+
+    .instructions li {
+      margin-bottom: 8px;
+    }
+
+    .instructions a {
+      color: #0969da;
+      text-decoration: none;
+    }
+
+    .instructions a:hover {
+      text-decoration: underline;
+    }
+
+    .instructions code {
+      background: #f6f8fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚙️ 設定</h1>
+    <p class="description">Notion APIの設定を行います。</p>
+
+    <form id="settingsForm">
+      <div class="form-group">
+        <label for="apiToken">Notion API Token</label>
+        <input type="password" id="apiToken" placeholder="secret_xxxxxxxxxxxxxx" required>
+        <div class="hint">NotionのIntegration Tokenを入力してください（secret_で始まる文字列）</div>
+      </div>
+
+      <div class="form-group">
+        <label for="databaseId">Database ID</label>
+        <input type="text" id="databaseId" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" required>
+        <div class="hint">タスク管理データベースのID（32文字の英数字）を入力してください</div>
+      </div>
+
+      <button type="submit">保存</button>
+    </form>
+
+    <div id="status" class="status"></div>
+
+    <div class="instructions">
+      <h2>📖 セットアップ手順</h2>
+      <ol>
+        <li>
+          <a href="https://www.notion.so/my-integrations" target="_blank">Notion Integrations</a>にアクセスし、「新しいインテグレーション」を作成
+        </li>
+        <li>
+          作成したIntegrationの「Internal Integration Token」（<code>secret_XXX</code>）をコピーし、上記の「Notion API Token」に入力
+        </li>
+        <li>
+          タスク管理用Notionデータベースを開き、以下のプロパティを作成:
+          <ul>
+            <li><strong>Name</strong>（タイトル）</li>
+            <li><strong>実行日</strong>（日付）</li>
+            <li><strong>完了</strong>（チェックボックス）</li>
+          </ul>
+        </li>
+        <li>
+          データベースの「…」メニュー → 「接続を追加」→ 作成したIntegrationを選択
+        </li>
+        <li>
+          データベースのURL（<code>https://notion.so/xxxxx?v=yyyyy</code>）から、Database ID（<code>xxxxx</code>の部分、32文字）をコピーし、上記の「Database ID」に入力
+        </li>
+        <li>
+          「保存」ボタンをクリック
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

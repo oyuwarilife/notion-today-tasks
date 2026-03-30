@@ -1,0 +1,177 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+  width: 400px;
+  max-height: 600px;
+  background: #f8f9fa;
+}
+
+.container {
+  padding: 16px;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* タスク追加エリア */
+.add-task {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#newTaskInput {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#newTaskInput:focus {
+  border-color: #0969da;
+}
+
+#addTaskBtn {
+  padding: 10px 16px;
+  background: #0969da;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+#addTaskBtn:hover {
+  background: #0860ca;
+}
+
+#addTaskBtn:active {
+  background: #0757ba;
+}
+
+/* タスクリスト */
+.task-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  background: white;
+  border: 1px solid #e1e4e8;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #e1e4e8;
+  transition: background 0.2s;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item:hover {
+  background: #f6f8fa;
+}
+
+.task-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.task-item label {
+  flex: 1;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+  user-select: none;
+}
+
+.task-item input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: #6e7781;
+}
+
+/* 状態メッセージ */
+.loading,
+.error,
+.empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: #6e7781;
+  font-size: 14px;
+}
+
+.error {
+  color: #cf222e;
+  background: #fff1f0;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+
+.empty {
+  font-size: 16px;
+}
+
+/* ボタンエリア */
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 10px;
+  background: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actions button:hover {
+  background: #f6f8fa;
+  border-color: #d0d7de;
+}
+
+.actions button:active {
+  background: #eaeef2;
+}
+
+/* スクロールバー */
+.task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.task-list::-webkit-scrollbar-track {
+  background: #f6f8fa;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+  background: #d0d7de;
+  border-radius: 4px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+  background: #afb8c1;
+}

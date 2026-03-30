@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion Today's Tasks</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Today's Tasks</h1>
+
+    <!-- タスク追加エリア -->
+    <div class="add-task">
+      <input type="text" id="newTaskInput" placeholder="タスク名を入力..." />
+      <button id="addTaskBtn">+ 追加</button>
+    </div>
+
+    <!-- タスクリスト -->
+    <div id="taskList" class="task-list">
+      <div class="loading">読み込み中...</div>
+    </div>
+
+    <!-- ボタンエリア -->
+    <div class="actions">
+      <button id="refreshBtn">🔄 更新</button>
+      <button id="settingsBtn">⚙️ 設定</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

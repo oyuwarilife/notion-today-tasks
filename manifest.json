@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Notion Today's Tasks",
+  "version": "1.0.0",
+  "description": "今日のNotionタスクを表示・チェック・追加",
+  "permissions": ["storage"],
+  "host_permissions": ["https://api.notion.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
